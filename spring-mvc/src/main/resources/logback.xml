@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<property name="LOG_ROOT_PATH" value="C:/ARMS/LOG" />
+	<property name="LOG_APPS_PATH" value="${LOG_ROOT_PATH}/iDEB-connector" />
+	
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- %l lowers performance -->
+			<!-- <pattern>%d %5p [%c] %m%n</pattern> -->
+			<!-- <pattern>[%d{HH:mm:ss}] %-5level %logger{36} - %msg%n</pattern> -->
+			<pattern>%-5p [%d{HH:mm:ss}][%-35logger{30} line:%line] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="rollingAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_APPS_PATH}/iDEBconnector_logback.log</file>
+		<encoder>
+			<pattern>%-5p [%d{HH:mm:ss}][%-35logger{30} line:%line] %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>>${LOG_APPS_PATH}/iDEBconnector_logback.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+			<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>100</maxHistory>
+ 		</rollingPolicy>
+		 <!-- <maxHistory>100</maxHistory>  -->
+	</appender>
+	
+	<appender name="ARMS-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_ROOT_PATH}/arms_file_job.log</file>
+		<encoder>
+			<pattern>%-5p [%d{HH:mm:ss}] %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_ROOT_PATH}/arms_file_job.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+			<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>100</maxHistory>
+ 		</rollingPolicy>
+	</appender>
+	
+	<appender name="ARMS-UPLOAD" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_ROOT_PATH}/arms_upload_job.log</file>
+		<encoder>
+			<pattern>%-5p [%d{HH:mm:ss}] %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>>${LOG_ROOT_PATH}/arms_upload_job.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>100</maxHistory>
+ 		</rollingPolicy>
+	</appender>
+	
+	<appender name="ARMS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_ROOT_PATH}/arms.log</file>
+		<encoder>
+			<pattern>%-5p [%d{HH:mm:ss}] %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>>${LOG_ROOT_PATH}/arms.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>100</maxHistory>
+ 		</rollingPolicy>
+	</appender>
+
+	<logger name="com.kcb.slik" 				level="DEBUG" />
+	<logger name="org.mybatis.spring" 			level="ERROR" />
+	<logger name="org.apache.tiles" 			level="ERROR" />
+	
+<!-- 	<logger name="org.springframework" 			level="INFO" />
+	<logger name="org.apache.commons.digester" 	level="ERROR" />
+	
+	<logger name="java.sql" 					level="ERROR" />
+	
+	<logger name="jdbc.sqlonly" 				level="off" 	additivity="false" />
+	<logger name="jdbc.sqltiming" 				level="WARN" 	additivity="true" />
+	<logger name="jdbc.audit" 					level="off" 	additivity="false" />
+	<logger name="jdbc.resultset" 				level="off" 	additivity="false" />
+	<logger name="jdbc.resultsettable" 			level="INFO" 	additivity="false" />
+	<logger name="jdbc.connection" 				level="off" 	additivity="false" />
+	<logger name="ch.qos.logback" 				level="off" 	additivity="false" /> -->
+	
+	<logger name="job.file" 				level="DEBUG">
+	    <appender-ref ref="ARMS-FILE" />
+	</logger>
+	
+	<logger name="job.upload" 				level="DEBUG">
+	    <appender-ref ref="ARMS-UPLOAD" />
+	</logger>
+	
+	<logger name="com.arms.app" 				level="DEBUG">
+	    <appender-ref ref="ARMS" />
+	</logger>
+	
+
+	
+    
+    <root level="INFO">
+        <appender-ref ref="consoleAppender" />
+        <!--appender-ref ref="rollingAppender" /-->
+    </root>
+	 
+</configuration>
